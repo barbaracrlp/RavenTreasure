@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->boolean('logged_in');
+            $table->boolean('is_designer');
             $table->rememberToken();
             $table->timestamps();//aqui esta el created_at y el updated_at
         });
