@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
+    protected $fillable=['status'];
+
+    public function cart(){
+        return $this->hasOne(Cart::class);
+    }
 }

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
+            $table->foreignId('design_id')->constrained('designs')->onDelete('cascade');
+            $table->integer('quantity');
+            $table->decimal('price_unit',8,2);
+            $table->decimal('total',8,2);
             $table->timestamps();
         });
     }
