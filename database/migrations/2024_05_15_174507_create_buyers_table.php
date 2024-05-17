@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('buyers', function (Blueprint $table) {
          
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->primary();
             $table->string('address');
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('set null');
+            $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('set null');
         });
     }
 

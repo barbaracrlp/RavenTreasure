@@ -4,6 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+//esta es la tabla de la relacion many to many
+
+
+
 return new class extends Migration
 {
     /**
@@ -11,13 +15,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('category_design', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('designer_id')->constrained('designers')->onDelete('cascade');
+            $table->foreignId('design_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->string('name');
-            $table->string('description');
-            $table->decimal('price');
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('category_design');
     }
 };

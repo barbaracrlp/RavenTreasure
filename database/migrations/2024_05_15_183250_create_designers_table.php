@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('designers', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->primary();
             $table->string('nameBrand')->unique();
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('set null');
+            $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('set null');
         });
     }
 

@@ -13,21 +13,19 @@ return new class extends Migration
     {
         Schema::create('designs', function (Blueprint $table) {
             $table->id();
-            $table->foreign('designer_id')->references('id')->on('designers');
+            $table->foreignId('designer_id')->constrained('designers');
             $table->string('name')->unique();
-            $table->foreign('collection_id')->references('id')->on('collections');
-         
+            $table->foreignId('collection_id')->nullable()->constrained('collections')->onDelete('set null');
             $table->integer('stock');
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('type_id')->nullable()->constrained('types')->onDelete('set null');
             $table->timestamps();
-         
             $table->date('expiration')->nullable();
-            $table->decimal('price');
+            $table->decimal('price', 8, 2);
             $table->string('file_path')->nullable();
-
         });
     }
+    
 
     /**
      * Reverse the migrations.
