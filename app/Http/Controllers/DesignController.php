@@ -14,6 +14,8 @@ class DesignController extends Controller
     public function index()
     {
         //
+        $designs = Design::all();
+        return view('designs.index', compact('designs'));
     }
 
     /**
