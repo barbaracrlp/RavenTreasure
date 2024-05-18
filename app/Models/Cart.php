@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Cart extends Model
 {
@@ -14,11 +17,19 @@ class Cart extends Model
         'totalPrice',
     ];
 
-    public function itemcarts(){
+    public function itemcarts():HasMany
+    {
         return $this->hasMany(CartItem::class);
     }
 
-    public function order(){
-        return $this->belongsTo(Order::class);
+    public function order():HasOne
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    public function buyer():BelongsTo
+    {
+        return $this->belongsTo(Buyer::class);
+
     }
 }

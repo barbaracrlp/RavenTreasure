@@ -35,7 +35,8 @@ class Design extends Model
         return $this->hasOne(Type::class);
     }
 
-    public function collection():BelongsTo{
+    public function collection():BelongsTo
+    {
         return $this->belongsTo(Collection::class);
     }
 
