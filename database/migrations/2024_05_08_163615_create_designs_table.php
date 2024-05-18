@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('designs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('designer_id')->constrained('designers')->onDelete('cascade');
+            $table->unsignedBigInteger('designer_id'); // Define the column that references 'user_id' in 'designers'
+            $table->foreign('designer_id')->references('user_id')->on('designers')->onDelete('cascade'); // Define the foreign key constraint
             $table->string('name')->unique();
             $table->foreignId('collection_id')->nullable()->constrained('collections')->onDelete('set null');
             $table->integer('stock');

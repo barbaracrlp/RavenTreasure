@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buyer_id')->constrained('buyers')->onDelete('cascade');
+            // $table->foreignId('buyer_id')->constrained('buyers')->onDelete('cascade');
+            $table->unsignedBigInteger('buyer_id'); // Define the column that references 'user_id' in 'designers'
+            $table->foreign('buyer_id')->references('user_id')->on('buyers')->onDelete('cascade');
             $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
             $table->string('state');
             $table->timestamps();

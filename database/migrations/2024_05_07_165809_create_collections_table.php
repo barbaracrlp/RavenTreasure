@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('designer_id')->constrained('designers')->onDelete('cascade');
+            // $table->foreignId('user_id')->constrained('designers')->onDelete('cascade');
+            // $table->foreign('designer_id')->constrained('designers')->onDelete('cascade');
+            // $table->foreign('designer_user_id')->constrained('designers')->onDelete('cascade');
+            $table->unsignedBigInteger('designer_id'); // Define the column that references 'user_id' in 'designers'
+            $table->foreign('designer_id')->references('user_id')->on('designers')->onDelete('cascade'); // Define the foreign key constraint
             $table->timestamps();
             $table->string('name');
             $table->string('description');
-            $table->decimal('price');
+            $table->decimal('price',8,2);
         });
     }
 

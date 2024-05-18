@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('designers', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->primary();
+            $table->foreignId('user_id')->primary(); // Define 'user_id' as the primary key
             $table->string('nameBrand')->unique();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // Define the foreign key constraint
             $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('set null');
         });
     }
