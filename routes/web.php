@@ -1,6 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//importo todos los conttroladores 
+//de momento me falta el de users 
+
+
+
+use App\Http\Controllers\DesignerController;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\DesignController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TypeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartItemController;
 
 Route::get('/', function () {
     return view('app');
@@ -8,3 +21,16 @@ Route::get('/', function () {
 
 // Route::get('/', 'HomeController@index')->name('home');
 Route::get('/designs', 'DesignController@index')->name('designs.index');
+
+// Rutas de recursos
+
+Route::resource('designers', DesignerController::class);
+Route::resource('collections', CollectionController::class);
+Route::resource('designs', DesignController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('types', TypeController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('carts', CartController::class);
+Route::resource('cart-items', CartItemController::class);
+
+
