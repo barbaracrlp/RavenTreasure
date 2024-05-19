@@ -34,3 +34,13 @@ Route::resource('carts', CartController::class);
 Route::resource('cart-items', CartItemController::class);
 
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
