@@ -44,3 +44,14 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+ // Rutas para el carrito
+ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+ Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+ Route::post('/cart/purchase', [CartController::class, 'purchase'])->name('cart.purchase');
+
+ // Rutas para los elementos del carrito
+ Route::post('/cart/add', [CartItemController::class, 'addToCart'])->name('cart.add');
+ Route::patch('/cart/item/{cartItem}', [CartItemController::class, 'update'])->name('cart.item.update');
+ Route::delete('/cart/item/{cartItem}', [CartItemController::class, 'destroy'])->name('cart.item.destroy');

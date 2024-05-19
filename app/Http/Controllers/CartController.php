@@ -1,66 +1,33 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $cart = Cart::where('user_id', Auth::id())->with('cartItems')->first();
+        return view('cart.index', compact('cart'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function checkout()
     {
-        //
+        if (Auth::check()) {
+            // Lógica para proceder al checkout
+            return view('cart.checkout');
+        } else {
+            return redirect()->route('login')->with('message', 'Please login to proceed with the purchase.');
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function purchase(Request $request)
     {
-        //
-    }
+        $cart = Cart::where('user_id', Auth::id())->first();
+        // Implementar lógica de compra aquí, como procesar el pago y vaciar el carrito
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
-    {
-        //
+        return redirect()->route('cart.index')->with('success', 'Purchase completed successfully.');
     }
 }

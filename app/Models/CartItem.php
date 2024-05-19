@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CartItem extends Model
@@ -23,7 +24,7 @@ class CartItem extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function design():HasOne{
-        return $this->hasOne(Design::class);
+    public function design():BelongsTo{
+        return $this->belongsTo(Design::class);
     }
 }

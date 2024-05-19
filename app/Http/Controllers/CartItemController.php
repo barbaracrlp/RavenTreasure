@@ -5,62 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Cart;
+
 
 class CartItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function addToCart(Request $request)
     {
-        //
+        $request->validate([
+            'design_id' => 'required|exists:designs,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
+        $cartItem = CartItem::updateOrCreate(
+            ['cart_id' => $cart->id, 'design_id' => $request->design_id],
+            ['quantity' => $request->quantity]
+        );
+
+        return redirect()->route('cart.index')->with('success', 'Item added to cart.');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(CartItem $cartItem)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CartItem $cartItem)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, CartItem $cartItem)
     {
-        //
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $cartItem->update(['quantity' => $request->quantity]);
+
+        return redirect()->route('cart.index')->with('success', 'Cart item updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(CartItem $cartItem)
     {
-        //
+        $cartItem->delete();
+
+        return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
     }
 }
